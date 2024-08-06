@@ -46,7 +46,7 @@ jobs:
 
     - name: Add known_hosts
       run: |
-        ssh-keyscan -t ed25519 13.125.199.106 >> ~/.ssh/known_hosts
+        ssh-keyscan -t ed25519 3.36.68.194 >> ~/.ssh/known_hosts
 
 
     - name: 기존프로세스 종료
@@ -55,14 +55,14 @@ jobs:
 
 
     - name: Deploy to Server
-      run: scp build/libs/*.jar ubuntu@13.125.199.106:~/
+      run: scp build/libs/*.jar ubuntu@3.36.68.194:~/
 
 
 
 
     - name: Run SSH commands
       run: |
-        ssh -i ~/.ssh/id_rsa ubuntu@13.125.199.106 << 'EOF'
+        ssh -i ~/.ssh/id_rsa ubuntu@3.36.68.194 << 'EOF'
           pkill -f 'java -jar' || true
           nohup java -jar ~/app/devops_step0-0.0.1-SNAPSHOT.jar > log.txt 2>&1 &
         EOF
