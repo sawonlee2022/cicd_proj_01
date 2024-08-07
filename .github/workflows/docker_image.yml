@@ -35,7 +35,7 @@ jobs:
 
     # 3. Docker 이미지 빌드
     - name: docker image build
-      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/devops_step2:${{ env.VERSION }} .
+      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/cicd_proj_01:${{ env.VERSION }} .
 
     # 4. DockerHub 로그인
     - name: docker login
@@ -46,7 +46,7 @@ jobs:
     
     # 5. Docker Hub 이미지 푸시
     - name: docker Hub push
-      run: docker push ${{ secrets.DOCKER_USERNAME }}/devops_step2:${{ env.VERSION }}
+      run: docker push ${{ secrets.DOCKER_USERNAME }}/cicd_proj_01:${{ env.VERSION }}
 
   deploy:
     needs: build  # build 후에 실행되도록 정의
@@ -62,9 +62,9 @@ jobs:
     - name: Docker run
       run: |
         sudo docker stop ubuntu-app1-1 && sudo docker rm ubuntu-app1-1 
-        sudo docker run -d --network ubuntu_my_bridge_network --name ubuntu-app1-1 --restart always ${{ secrets.DOCKER_USERNAME }}/devops_step1:${{ env.VERSION }}
+        sudo docker run -d --network ubuntu_my_bridge_network --name ubuntu-app1-1 --restart always ${{ secrets.DOCKER_USERNAME }}/cicd_proj_01:${{ env.VERSION }}
         sudo docker stop ubuntu-app2-1 && sudo docker rm ubuntu-app2-1 
-        sudo docker run -d --network ubuntu_my_bridge_network --name ubuntu-app2-1 --restart always ${{ secrets.DOCKER_USERNAME }}/devops_step1:${{ env.VERSION }}
+        sudo docker run -d --network ubuntu_my_bridge_network --name ubuntu-app2-1 --restart always ${{ secrets.DOCKER_USERNAME }}/cicd_proj_01:${{ env.VERSION }}
         sudo docker image prune -af
       #위 명령은 사용되지 않는 도커이미지를 삭제한다
       #docker-compose-nginx.yml 파일이 실행되는 위치 폴더 명입니다 
